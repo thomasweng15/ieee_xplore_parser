@@ -1,4 +1,12 @@
 import json
+import requests
 
 cfg = json.load(open('config.json'))
-print(cfg['apikey'])
+url = "http://ieeexploreapi.ieee.org/api/v1/search/articles"
+params = {
+    "publication_title": cfg['publication_title'],
+    "key": cfg['apikey']
+}
+
+r = requests.get(url, params=params)
+print(r)
