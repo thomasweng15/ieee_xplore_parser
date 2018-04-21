@@ -1,5 +1,6 @@
 {
-    "publication_title": "2015 IEEE International Conference on Robotics and Automation (ICRA)",
+    "publication_title": "2015 IEEE International Conference on Robotics and Automation",
     "apikey": "API_KEY",
-    "outfile": "example.json"
+    "outfile": "example.json",
+    "year": "2015"
 }
