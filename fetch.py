@@ -17,7 +17,7 @@ def load_existing_data(fname):
     except FileNotFoundError:
         return {}
 
-outfile_name = 'data/' + cfg['outfile']
+outfile_name = 'data/' + cfg['outfile'].replace("{0}", cfg['year'])
 data = load_existing_data(outfile_name)
 
 # Request parameters

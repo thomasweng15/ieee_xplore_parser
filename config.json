@@ -1,6 +1,6 @@
 {
-    "publication_title": "2009 IEEE International Conference on Robotics and Automation",
+    "publication_title": "IEEE International Conference on Robotics and Automation",
     "apikey": "5twk3vct4k576k36b59ac8nw",
-    "outfile": "2009icra.json",
-    "year": "2009"
+    "outfile": "{0}icra.json",
+    "year": "1998"
 }
