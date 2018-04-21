@@ -46,6 +46,12 @@ def should_terminate(num_calls, max_calls, start_record, total_records):
     return num_calls > max_calls or \
         (total_records is not None and start_record > total_records)
 
+def update_start_record(data, start_record, max_record, total_records):
+    num_downloaded = data["articles"][-1]["rank"]
+    return num_downloaded + 1 \
+        if start_record + max_record > total_records and num_downloaded < int(total_records) \
+        else start_record + max_record
+
 while not should_terminate(num_calls, max_calls, start_record, total_records):
     # Make request
     params["start_record"] = start_record
@@ -63,8 +69,8 @@ while not should_terminate(num_calls, max_calls, start_record, total_records):
 
     # Update loop variables
     num_calls += 1
-    start_record += max_record
     total_records = req_json["total_records"]
+    start_record = update_start_record(data, start_record, max_record, total_records)
     print("num_calls: " + str(num_calls))
     print("start_record: " + str(start_record))
     time.sleep(sleep_duration)
