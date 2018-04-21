@@ -22,17 +22,22 @@ data = load_existing_data(outfile_name)
 
 # Request parameters
 url = "http://ieeexploreapi.ieee.org/api/v1/search/articles"
-max_record = 25
+max_record = 200
 params = {
-    "publication_title": cfg['publication_title'],
+    "publication_title": '"' + cfg['publication_title'] + '"',
     "apikey": cfg['apikey'],
-    "max_record": str(max_record)
+    "max_record": str(max_record),
+    "start_year": cfg['year'],
+    "end_year": cfg['year']
 }
 
 # Request constraints
+def get_start_record(data):
+    return 1 if data == {} else data["articles"][-1]["rank"] + 1
+
 num_calls = 0
 max_calls = 175
-start_record = 1 # TODO parametrize
+start_record = get_start_record(data)
 total_records = None
 sleep_duration = 0.5
 
@@ -54,7 +59,7 @@ while not should_terminate(num_calls, max_calls, start_record, total_records):
     if data == {}:
         data = req_json
     else:
-        data["articles"].append(req_json["articles"])
+        data["articles"] += req_json["articles"]
 
     # Update loop variables
     num_calls += 1
