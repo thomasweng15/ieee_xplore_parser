@@ -2,10 +2,10 @@
 Fetch all metadata from a single publication / conference year.
 """
 
+import sys
 import time
 import json
 import requests
-
 
 # Load config
 cfg = json.load(open('config.json'))
@@ -29,7 +29,7 @@ def update_start_record(data, start_record, max_record, total_records):
         if start_record + max_record > total_records and num_downloaded < int(total_records) \
         else start_record + max_record
 
-outfile_name = 'data/' + cfg['outfile'].replace("{0}", cfg['year'])
+outfile_name = 'data/IROS/' + cfg['outfile'].replace("{0}", cfg['year'])
 data = load_existing_data(outfile_name)
 
 # Request parameters
@@ -43,7 +43,6 @@ params = {
     "end_year": cfg['year']
 }
 
-
 # Request constraints
 start_record = get_start_record(data)
 total_records = None
@@ -56,7 +55,12 @@ while not should_terminate(start_record, total_records):
     print("Requesting...")
     print(params)
     r = requests.get(url, params=params)
-    req_json = r.json()
+    try:
+        req_json = r.json()
+    except json.decoder.JSONDecodeError as e:
+        print(e)
+        print(r.text)
+        sys.exit(1)
 
     # Append to existing data
     print("Appending data...")
@@ -66,7 +70,6 @@ while not should_terminate(start_record, total_records):
         data["articles"] += req_json["articles"]
 
     # Update loop variables
-    num_calls += 1
     total_records = req_json["total_records"]
     start_record = update_start_record(data, start_record, max_record, total_records)
     print("start_record: " + str(start_record))
