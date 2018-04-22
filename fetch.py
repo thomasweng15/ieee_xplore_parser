@@ -38,7 +38,7 @@ max_record = 200
 params = {
     "publication_title": '"' + cfg['publication_title'] + '"',
     "apikey": cfg['apikey'],
-    "max_record": str)max_record(,
+    "max_record": str(max_record),
     "start_year": cfg['year'],
     "end_year": cfg['year']
 }
