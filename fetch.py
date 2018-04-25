@@ -29,7 +29,7 @@ def update_start_record(data, start_record, max_record, total_records):
         if start_record + max_record > total_records and num_downloaded < int(total_records) \
         else start_record + max_record
 
-outfile_name = 'data/IROS/' + cfg['outfile'].replace("{0}", cfg['year'])
+outfile_name = 'data/' + cfg['outfile'] + '/' + cfg['year'] + '.json'
 data = load_existing_data(outfile_name)
 
 # Request parameters
